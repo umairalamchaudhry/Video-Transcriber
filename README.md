@@ -17,7 +17,7 @@ This Python program transcribes and translates video files into text documents. 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/video-transcription.git
+   git clone https://github.com/umairalamchaudhry/Video-Transcriber.git
    cd video-transcription
    ```
 
