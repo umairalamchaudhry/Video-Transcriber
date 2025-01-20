@@ -8,7 +8,42 @@ os.environ["PATH"] += os.pathsep + "C:\\ffmpeg\\bin"
 from pydub import AudioSegment
 
 
-from pydub import AudioSegment
+def main():
+    print("Video Transcriber")
+    print("-----------------")
+    video_file = input("Enter video file name (must be in current directory): ")
+
+    if not os.path.exists(video_file):
+        print(f"Error: File '{video_file}' not found in current directory")
+        return
+
+    print("\nCommon language codes:")
+    print("English: en, Spanish: es, French: fr")
+    print("Hindi: hi, Urdu: ur")
+    language = input("\nEnter target language code: ")
+
+    print("Processing video...")
+    text = transcribe_audio(video_file)
+
+    print("Translating text...")
+    translated_text = translate_text(text, language)
+
+    print("\nTranscription complete!")
+
+    # Get output file name
+    output_file = input("\nEnter output file name (without extension): ") + ".txt"
+
+    # Save transcription to file
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(translated_text)
+
+    print(f"\nTranscription saved to {output_file}")
+    print("\nPreview of transcription:")
+    print(translated_text[:500] + ("..." if len(translated_text) > 500 else ""))
+
+    # Clean up WAV file
+    if os.path.exists("audio.wav"):
+        os.remove("audio.wav")
 
 
 def transcribe_audio(video_file):
@@ -53,44 +88,6 @@ def transcribe_audio(video_file):
 def translate_text(text, dest_language):
     translation = GoogleTranslator(source="auto", target=dest_language).translate(text)
     return translation
-
-
-def main():
-    print("Video Transcriber")
-    print("-----------------")
-    video_file = input("Enter video file name (must be in current directory): ")
-
-    if not os.path.exists(video_file):
-        print(f"Error: File '{video_file}' not found in current directory")
-        return
-
-    print("\nCommon language codes:")
-    print("English: en, Spanish: es, French: fr")
-    print("Hindi: hi, Urdu: ur")
-    language = input("\nEnter target language code: ")
-
-    print("Processing video...")
-    text = transcribe_audio(video_file)
-
-    print("Translating text...")
-    translated_text = translate_text(text, language)
-
-    print("\nTranscription complete!")
-
-    # Get output file name
-    output_file = input("\nEnter output file name (without extension): ") + ".txt"
-
-    # Save transcription to file
-    with open(output_file, "w", encoding="utf-8") as f:
-        f.write(translated_text)
-
-    print(f"\nTranscription saved to {output_file}")
-    print("\nPreview of transcription:")
-    print(translated_text[:500] + ("..." if len(translated_text) > 500 else ""))
-
-    # Clean up WAV file
-    if os.path.exists("audio.wav"):
-        os.remove("audio.wav")
 
 
 if __name__ == "__main__":
