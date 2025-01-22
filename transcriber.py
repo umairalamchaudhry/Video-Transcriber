@@ -41,10 +41,6 @@ def main():
     print("\nPreview of transcription:")
     print(translated_text[:500] + ("..." if len(translated_text) > 500 else ""))
 
-    # Clean up WAV file
-    if os.path.exists("audio.wav"):
-        os.remove("audio.wav")
-
 
 def transcribe_audio(video_file):
     try:
